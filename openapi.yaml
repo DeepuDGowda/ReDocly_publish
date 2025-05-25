@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: DIGITAL BUSINESS PLATFORM - Post Sanction API’s
+  title: DIGITAL BUSINESS PLATFORM - Post Sanction API’s to update
   license:
     name: the license to update the LAD API
     url: https://apigw.test.integreat.perfios.com/adminportal/api/v1/borrower/fetchAllEligibleLoanPrograms
