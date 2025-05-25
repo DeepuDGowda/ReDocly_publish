@@ -1,0 +1,357 @@
+openapi: 3.0.3
+info:
+  title: DIGITAL BUSINESS PLATFORM - Post Sanction API’s
+  license:
+    name: the license to update the LAD API
+    url: https://apigw.test.integreat.perfios.com/adminportal/api/v1/borrower/fetchAllEligibleLoanPrograms
+  version: 0.0.1
+  description: |
+    The purpose of the document is to guide the development team implement Finance and Asset Evaluator APIs, its request, response structure and error codes.
+servers:
+  - url: https://row.unionbankofindia.co.in/sit/dlp /web/mpgw
+    description: Environment - Non-production
+paths:
+  /api-v3/pgs/initiateSale:
+    post:
+      summary: initiating sale
+      operationId: FetchAccountCustomerInformation
+      security:
+        - BasicAuth: []
+      parameters:
+        - name: CIF
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: PRODUCT
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: string
+                customerEmailID:
+                  type: string
+                loanUuid:
+                  type: string
+                returnURL:
+                  type: string
+                txnType:
+                  type: string
+      responses:
+        "200":
+          description: CIF,PRODUCT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    output:
+                      type: object
+                      properties:
+                        redirectURL:
+                          type: string
+                        secureHash:
+                          type: string
+                        merchantId:
+                          type: string
+                        authorizeURI:
+                          type: string
+                        merchantTxnNo:
+                          type: string
+                        generateOTPURI:
+                          type: string
+                        tranCtx:
+                          type: string
+                        aggregatorID:
+                          type: string
+                        verifyOTPURI:
+                          type: string
+                        showOTPCapturePage:
+                          type: string
+                        responseCode:
+                          type: string
+                    code:
+                      type: string
+                    message:
+                      type: string
+                    status:
+                      type: string
+        "400":
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    accountInfo:
+                      type: object
+                      properties:
+                        schemeCode:
+                          type: string
+                          example: CIF-PRODUCT ACTIVITY
+  /api-v3/pgs/checkSaleStatus:
+    get:
+      summary: Check Sales Status
+      operationId: CheckSalesStatus
+      security:
+        - BasicAuth: []
+      # parameters:
+      # - name: loanUuid, merchantTxnId, txnType
+      #   in: query
+      #   schema:
+      #     type: object
+      #     format: int64
+      responses:
+        "200":
+          # summary:
+          description: Check Sales Status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  status:
+                    type: string
+        "400":
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    accountInfo:
+                      type: object
+                      properties:
+                        schemeCode:
+                          type: string
+                          example: SALES-STATUS ACTIVITY
+  /businessRules/emiCalcProccessingCharges:
+    post:
+      summary: emiCalcProccessingCharges
+      operationId: emiCalcProccessingCharges
+      security:
+        - BasicAuth: []
+      # description: loanUuid, merchantTxnId, txnType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roi:
+                  type: number
+                tenure:
+                  type: number
+                amount:
+                  type: number
+                applicationId:
+                  type: string
+                access_token:
+                  type: string
+                vehicleType:
+                  type: string
+      responses:
+        "200":
+          description: EMI calculation process
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    output:
+                      type: object
+                      properties:
+                        emi:
+                          type: number
+                        product:
+                          type: string
+                        stampDuty:
+                          type: number
+                        processingFee1:
+                          type: number
+                        roi:
+                          type: number
+                        processingFee:
+                          type: number
+                        downpayment:
+                          type: string
+                    code:
+                      type: number
+                    message:
+                      type: string
+                    status:
+                      type: string
+        "400":
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    accountInfo:
+                      type: object
+                      properties:
+                        schemeCode:
+                          type: string
+                          example: EMI-CALC ACTIVITY
+  /api-v3/fetchESigningStatus:
+    post:
+      summary: fetchESigningStatus
+      operationId: fetchESigningStatus
+      security:
+        - BasicAuth: []
+      # description: loanUuid, merchantTxnId, txnType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                loanUui:
+                  type: string
+      responses:
+        "200":
+          description: personalProfileUpdate - To store PAN details with respect to loan UUID.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  data:
+                    type: object
+                  signAffixed:
+                    type: boolean
+                  eSignLink:
+                    type: string
+                  applicationId:
+                    type: string
+                  message:
+                    type: string
+                  status:
+                    type: string
+        "400":
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    accountInfo:
+                      type: object
+                      properties:
+                        schemeCode:
+                          type: string
+                          example: PERSONAL-INFO ACTIVITY
+  /api-v3/initiateSignRequest:
+    post:
+      summary: initiateSignRequest
+      operationId: initiateSignRequest
+      security:
+        - BasicAuth: []
+      # description: createSubStatusActivity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                errorUrl:
+                  type: string
+                loanUuid:
+                  type: string
+                successUrl:
+                  type: string
+                f2f:
+                  type: boolean
+      responses:
+        "200":
+          description: createSubStatusActivity
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    code:
+                      type: string
+                    message:
+                      type: string
+                    docHTML:
+                      type: string
+                    txnld:
+                      type: string
+                    status:
+                      type: string
+        "400":
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    accountInfo:
+                      type: object
+                      properties:
+                        schemeCode:
+                          type: string
+                          example: SUB-CATEGORY ACTIVITY
+  /api-v3/calculateStampDutyCharges:
+    post:
+      summary: calculateStampDutyCharges
+      operationId: calculateStampDutyCharges
+      security:
+        - BasicAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                loanUuid:
+                  type: string
+      responses:
+        "200":
+          description: createSubStatusActivity
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    accountInfo:
+                      type: object
+                      properties:
+                        schemeCode:
+                          type: string
+                          example: SUB-CATEGORY ACTIVITY
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
