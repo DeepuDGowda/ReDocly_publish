@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf8" />
+  <meta charset="utf-8" />
   <title>DIGITAL BUSINESS PLATFORM - Post Sanction API’s</title>
-  <!-- needed for adaptive design -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
       margin: 0;
@@ -22,34 +21,37 @@
       bottom: 0;
     }
   </style>
+  <!-- ReDoc script -->
+  <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
 </head>
 <body>
-  <redoc
-    spec-url="openapi.yaml"
-    options='{
-      "theme": {
-        "colors": {
-          "primary": { "main": "#007ACC" },
-          "text": { "primary": "#333333" },
-          "sidebarBg": "#f7f7f7",
-          "http": {
-            "get": "#61affe",
-            "post": "#49cc90",
-            "put": "#fca130",
-            "delete": "#f93e3e"
+  <div id="redoc-container"></div>
+
+  <script>
+    Redoc.init('openapi.yaml', {
+      theme: {
+        colors: {
+          primary: { main: '#007ACC' },
+          text: { primary: '#333333' },
+          sidebar: { backgroundColor: '#f7f7f7' },
+          http: {
+            get: '#61affe',
+            post: '#49cc90',
+            put: '#fca130',
+            delete: '#f93e3e'
           }
         },
-        "logo": {
-          "url": "./Images/logo.png",
-          "backgroundColor": "#ffffff",
-          "altText": "API Logo"
+        logo: {
+          url: './Images/logo.png',
+          backgroundColor: '#ffffff',
+          altText: 'API Logo'
         },
-        "typography": {
-          "fontFamily": "Open Sans, sans-serif"
+        typography: {
+          fontFamily: 'Open Sans, sans-serif'
         }
       }
-    }'>
-  </redoc>
+    }, document.getElementById('redoc-container'));
+  </script>
 
   <footer>© 2025 Deepu API Docs. All rights reserved.</footer>
 </body>
